@@ -7,20 +7,6 @@ import { useAdminAuth } from '../context/AdminAuthContext';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { getErrorMessage } from '../utils/apiError';
 
-const ADMIN_USERNAME = 'admin';
-const ADMIN_LOGIN_EMAIL = 'admin@example.com';
-
-function resolveAdminEmail(identifier) {
-  const value = identifier.trim();
-  if (!value) {
-    return value;
-  }
-  if (value.toLowerCase() === ADMIN_USERNAME) {
-    return ADMIN_LOGIN_EMAIL;
-  }
-  return value;
-}
-
 export function AdminIndexRedirect() {
   const { isAuthenticated } = useAdminAuth();
   return <Navigate to={isAuthenticated ? ROUTES.ADMIN_DASHBOARD : ROUTES.ADMIN_LOGIN} replace />;
@@ -46,7 +32,7 @@ export function AdminLoginPage() {
     setSubmitting(true);
     setError('');
     try {
-      await login({ email: resolveAdminEmail(email), password });
+      await login({ email: email.trim(), password });
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {

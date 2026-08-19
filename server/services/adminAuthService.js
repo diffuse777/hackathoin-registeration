@@ -65,6 +65,12 @@ async function ensureInitialAdmin({ email, password }) {
 
 async function login(body) {
   const { email, password } = validateAdminLogin(body);
+  const config = loadEnv();
+
+  if (email === config.admin.email) {
+    await ensureInitialAdmin(config.admin);
+  }
+
   const admin = await adminRepository.findByEmail(email, { includePasswordHash: true });
   const passwordHash = admin?.passwordHash || (await getDummyPasswordHash());
   const passwordMatches = await comparePassword(password, passwordHash);

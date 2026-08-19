@@ -11,9 +11,10 @@ function validateAdminLogin(body) {
 
   let email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
   const password = typeof body.password === 'string' ? body.password : '';
+  const envEmail = String(loadEnv().admin.email).trim().toLowerCase();
 
-  if (email === 'admin') {
-    email = String(loadEnv().admin.email).trim().toLowerCase();
+  if (!email || email === 'admin' || email === 'admin@example.com') {
+    email = envEmail;
   }
 
   if (!email || !EMAIL_PATTERN.test(email) || !password) {
