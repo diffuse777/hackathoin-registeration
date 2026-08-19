@@ -37,8 +37,12 @@ async function connectDB(mongoUri) {
   }
 
   await mongoose.connect(mongoUri, {
-    serverSelectionTimeoutMS: process.env.VERCEL ? 8000 : 15000,
-    maxPoolSize: process.env.VERCEL ? 5 : 10,
+    serverSelectionTimeoutMS: process.env.VERCEL ? 5000 : 15000,
+    connectTimeoutMS: process.env.VERCEL ? 5000 : 15000,
+    socketTimeoutMS: 20000,
+    maxPoolSize: process.env.VERCEL ? 1 : 10,
+    minPoolSize: 0,
+    family: 4,
   });
 
   return mongoose.connection;

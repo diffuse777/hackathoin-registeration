@@ -1,12 +1,14 @@
 require('dotenv').config();
 
-const serverless = require('serverless-http');
 const { loadEnv } = require('../server/config/env');
 const { connectDB } = require('../server/config/db');
 const { createApp } = require('../server/app');
 const { ensureInitialAdmin } = require('../server/services/adminAuthService');
 
-let handlerPromise;
+const globalForApi = globalThis;
+if (!globalForApi.__hackathonApi) {
+  globalForApi.__hackathonApi = { appPromise: null };
+}
 
 function restoreApiUrl(req) {
   const incoming = req.url || '/';
@@ -20,38 +22,63 @@ function restoreApiUrl(req) {
 
   const headerPath = req.headers['x-invoke-path'] || req.headers['x-forwarded-uri'];
   if (typeof headerPath === 'string' && headerPath.startsWith('/api')) {
-    const headerPathname = headerPath.split('?')[0];
-    req.url = `${headerPathname}${search}`;
+    req.url = `${headerPath.split('?')[0]}${search}`;
     return;
   }
 
   req.url = `${pathname === '/' ? '/api' : `/api${pathname.startsWith('/') ? pathname : `/${pathname}`}`}${search}`;
 }
 
-async function getHandler() {
-  if (!handlerPromise) {
-    handlerPromise = (async () => {
-      const config = loadEnv();
-      await connectDB(config.mongoUri);
-      await ensureInitialAdmin(config.admin);
-      const app = createApp(config, { apiOnly: true });
-      return serverless(app, {
-        binary: ['application/pdf', 'application/octet-stream'],
+function runExpress(app, req, res) {
+  return new Promise((resolve, reject) => {
+    const done = () => {
+      res.off('finish', done);
+      res.off('close', done);
+      resolve();
+    };
+
+    res.on('finish', done);
+    res.on('close', done);
+
+    try {
+      app(req, res, (error) => {
+        if (error) {
+          reject(error);
+        }
       });
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+async function getApp() {
+  if (!globalForApi.__hackathonApi.appPromise) {
+    globalForApi.__hackathonApi.appPromise = (async () => {
+      const config = loadEnv();
+      try {
+        await connectDB(config.mongoUri);
+      } catch (error) {
+        throw new Error(
+          'Cannot reach MongoDB from Vercel. In Atlas go to Network Access and allow 0.0.0.0/0, then check MONGODB_URI.'
+        );
+      }
+      await ensureInitialAdmin(config.admin);
+      return createApp(config, { apiOnly: true });
     })().catch((error) => {
-      handlerPromise = null;
+      globalForApi.__hackathonApi.appPromise = null;
       throw error;
     });
   }
 
-  return handlerPromise;
+  return globalForApi.__hackathonApi.appPromise;
 }
 
 module.exports = async (req, res) => {
   try {
     restoreApiUrl(req);
-    const handler = await getHandler();
-    return handler(req, res);
+    const app = await getApp();
+    await runExpress(app, req, res);
   } catch (error) {
     if (!res.headersSent) {
       res.statusCode = 500;
