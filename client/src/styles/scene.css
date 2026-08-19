@@ -1,0 +1,423 @@
+.scene-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  inset: 0;
+  opacity: 0.07;
+  pointer-events: none;
+  position: absolute;
+  z-index: 6;
+}
+
+.hero {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 18%, rgb(196 74 42 / 0.28), transparent 62%),
+    linear-gradient(180deg, #120909 0%, #070605 58%, #0a0807 100%);
+  isolation: isolate;
+  min-height: min(92vh, 54rem);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-scene {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.hero-scene svg {
+  max-width: none;
+}
+
+.hero-scene__sky {
+  background:
+    linear-gradient(180deg, #1a0c0c 0%, #0e0808 38%, #070605 100%);
+  inset: 0;
+  position: absolute;
+}
+
+.hero-scene__stars {
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgb(244 238 230 / 0.45), transparent),
+    radial-gradient(1px 1px at 28% 8%, rgb(244 238 230 / 0.28), transparent),
+    radial-gradient(1.5px 1.5px at 72% 14%, rgb(232 160 90 / 0.35), transparent),
+    radial-gradient(1px 1px at 88% 22%, rgb(244 238 230 / 0.22), transparent),
+    radial-gradient(1px 1px at 64% 6%, rgb(244 238 230 / 0.3), transparent);
+  inset: 0 0 45% 0;
+  position: absolute;
+}
+
+.hero-scene__haze {
+  background: radial-gradient(ellipse 80% 50% at 50% 22%, rgb(196 74 42 / 0.22), transparent 70%);
+  inset: 0;
+  position: absolute;
+}
+
+.hero-scene__moon {
+  filter: drop-shadow(0 0 48px rgb(196 74 42 / 0.45));
+  height: min(58vw, 30rem);
+  left: 50%;
+  position: absolute;
+  top: 7%;
+  transform: translateX(-50%);
+  width: min(58vw, 30rem);
+  z-index: 1;
+}
+
+.hero-scene__moon-face {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.hero-scene__clouds {
+  height: 42%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.hero-scene__mountains {
+  bottom: 18%;
+  height: 38%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.hero-scene__mountains--back {
+  bottom: 22%;
+  height: 42%;
+  z-index: 2;
+}
+
+.hero-scene__mountains--front {
+  bottom: 16%;
+  z-index: 4;
+}
+
+.hero-scene__shrine {
+  bottom: 24%;
+  height: auto;
+  left: 8%;
+  position: absolute;
+  width: min(18vw, 8.5rem);
+  z-index: 3;
+}
+
+.hero-scene__pagoda {
+  bottom: 20%;
+  height: auto;
+  position: absolute;
+  right: 4%;
+  width: min(24vw, 12rem);
+  z-index: 3;
+}
+
+.hero-scene__torii {
+  bottom: 18%;
+  height: auto;
+  left: 2%;
+  position: absolute;
+  width: min(22vw, 10.5rem);
+  z-index: 5;
+}
+
+.hero-scene__water {
+  background:
+    linear-gradient(180deg, transparent 0%, rgb(7 6 5 / 0.35) 18%, #0b0908 100%),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 11px,
+      rgb(232 160 90 / 0.05) 11px 12px
+    );
+  bottom: 0;
+  height: 26%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 5;
+}
+
+.hero-scene__reflection {
+  background: radial-gradient(ellipse 42% 80% at 50% 0%, rgb(196 74 42 / 0.22), transparent 70%);
+  bottom: 0;
+  height: 24%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 5;
+}
+
+.hero-scene__desk {
+  bottom: 1.5%;
+  height: auto;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-52%);
+  width: min(72vw, 26rem);
+  z-index: 6;
+}
+
+.hero__inner {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: min(92vh, 54rem);
+  padding: 6.5rem 0 8.5rem;
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+
+.hero__title {
+  margin: 0;
+}
+
+.hero__title .display-title {
+  color: #c63d32;
+  font-size: clamp(3.1rem, 14vw, 7.6rem);
+  text-shadow: 0 0 28px rgb(142 28 28 / 0.45);
+}
+
+.hero__title .serif-kicker,
+.hero__series {
+  align-items: center;
+  color: var(--ink);
+  display: flex;
+  font-weight: 600;
+  gap: 0.75rem;
+  justify-content: center;
+  letter-spacing: 0.32em;
+  margin: 0.15rem 0 0.4rem;
+}
+
+.hero__tagline {
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  margin-top: 0.35rem;
+  max-width: 28rem;
+}
+
+.hero__ready {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 3.2vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  margin: 0.35rem 0 0;
+  text-transform: uppercase;
+}
+
+.hero__soon {
+  color: var(--crimson-soft);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  margin: 0.1rem 0 1.4rem;
+  text-shadow: 0 0 18px rgb(142 28 28 / 0.35);
+  text-transform: uppercase;
+}
+
+.page-atmosphere {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.page-atmosphere svg {
+  max-width: none;
+}
+
+.page-atmosphere__sky {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgb(142 28 28 / 0.2), transparent 58%),
+    linear-gradient(180deg, #140c0b 0%, #0a0807 46%, #070605 100%);
+  inset: 0;
+  position: absolute;
+}
+
+.page-atmosphere__moon {
+  filter: drop-shadow(0 0 36px rgb(196 74 42 / 0.28));
+  height: min(34vw, 16rem);
+  left: 50%;
+  opacity: 0.42;
+  position: absolute;
+  top: 3.5rem;
+  transform: translateX(-50%);
+  width: min(34vw, 16rem);
+}
+
+.page-atmosphere__moon svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.page-atmosphere__torii {
+  bottom: 8%;
+  height: auto;
+  left: 2%;
+  opacity: 0.28;
+  position: absolute;
+  width: min(16vw, 7.5rem);
+}
+
+.page-atmosphere__pagoda {
+  bottom: 8%;
+  height: auto;
+  opacity: 0.28;
+  position: absolute;
+  right: 2%;
+  width: min(18vw, 8.5rem);
+}
+
+.page-atmosphere__mountains {
+  bottom: 0;
+  height: 28%;
+  left: 0;
+  opacity: 0.85;
+  position: absolute;
+  width: 100%;
+}
+
+.page-atmosphere__water {
+  background: linear-gradient(180deg, transparent, rgb(7 6 5 / 0.72));
+  bottom: 0;
+  height: 22%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.page-atmosphere__texture {
+  background:
+    radial-gradient(ellipse 50% 40% at 92% 8%, rgb(196 74 42 / 0.1), transparent 62%),
+    radial-gradient(ellipse 40% 30% at 8% 100%, rgb(42 26 20 / 0.5), transparent 70%);
+  inset: 0;
+  position: absolute;
+}
+
+.page-atmosphere--register .page-atmosphere__moon {
+  opacity: 0.38;
+}
+
+.page-atmosphere--payment .page-atmosphere__sky {
+  background:
+    radial-gradient(ellipse 55% 32% at 50% 0%, rgb(142 28 28 / 0.14), transparent 60%),
+    linear-gradient(180deg, #110d0c 0%, #0b0908 100%);
+}
+
+.page-atmosphere--payment .page-atmosphere__moon {
+  height: min(26vw, 12rem);
+  opacity: 0.22;
+  top: 4.5rem;
+  width: min(26vw, 12rem);
+}
+
+.page-atmosphere--payment .page-atmosphere__torii,
+.page-atmosphere--payment .page-atmosphere__pagoda {
+  display: none;
+}
+
+.page-atmosphere--success .page-atmosphere__sky {
+  background:
+    radial-gradient(ellipse 60% 38% at 50% 0%, rgb(232 160 90 / 0.18), transparent 62%),
+    linear-gradient(180deg, #16100c 0%, #0a0807 100%);
+}
+
+.page-atmosphere--success .page-atmosphere__moon {
+  filter: drop-shadow(0 0 40px rgb(232 160 90 / 0.28));
+  opacity: 0.48;
+}
+
+.page-atmosphere--admin .page-atmosphere__sky {
+  background:
+    radial-gradient(ellipse 42% 28% at 88% 0%, rgb(196 74 42 / 0.1), transparent 64%),
+    linear-gradient(180deg, #100d0c 0%, #0c0a09 100%);
+}
+
+.page-atmosphere--admin .page-atmosphere__moon {
+  height: 9rem;
+  left: auto;
+  opacity: 0.14;
+  right: 4%;
+  top: 1.25rem;
+  transform: none;
+  width: 9rem;
+}
+
+.page-atmosphere--admin .page-atmosphere__pagoda {
+  bottom: 0;
+  opacity: 0.09;
+  width: 7.5rem;
+}
+
+.page-atmosphere--admin .page-atmosphere__torii {
+  display: none;
+}
+
+.page-atmosphere--admin .page-atmosphere__mountains {
+  height: 16%;
+  opacity: 0.28;
+}
+
+.page-atmosphere--admin .scene-grain {
+  opacity: 0.04;
+}
+
+@media (max-width: 900px) {
+  .hero-scene__shrine {
+    opacity: 0.45;
+    width: min(16vw, 5.5rem);
+  }
+
+  .hero-scene__pagoda {
+    opacity: 0.55;
+    width: min(22vw, 8rem);
+  }
+
+  .hero-scene__torii {
+    opacity: 0.55;
+    width: min(20vw, 7rem);
+  }
+
+  .hero-scene__desk {
+    opacity: 0.72;
+    width: min(82vw, 22rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-scene__shrine,
+  .hero-scene__pagoda {
+    display: none;
+  }
+
+  .hero-scene__torii {
+    bottom: 16%;
+    opacity: 0.35;
+    width: 4.6rem;
+  }
+
+  .hero-scene__desk {
+    bottom: 0.4rem;
+    opacity: 0.42;
+    width: 16.5rem;
+  }
+
+  .hero-scene__moon {
+    height: min(78vw, 18rem);
+    top: 11%;
+    width: min(78vw, 18rem);
+  }
+
+  .page-atmosphere__torii,
+  .page-atmosphere__pagoda {
+    display: none;
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "hackathon-registration",
+  "version": "1.0.0",
+  "description": "Industrial-grade hackathon registration system (backend foundation)",
+  "main": "server/server.js",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "test:model": "node --test server/tests/registration.model.test.js",
+    "test:api": "node --test server/tests/registration.api.test.js",
+    "test:payment": "node --test server/tests/payment.api.test.js",
+    "test:auth": "node --test server/tests/adminAuth.api.test.js",
+    "test:admin-registrations": "node --test server/tests/adminRegistrations.api.test.js",
+    "test:export": "node --test server/tests/adminRegistrations.export.test.js",
+    "test:pdf": "node --test server/tests/adminRegistrations.pdf.test.js",
+    "client": "npm run dev --prefix client",
+    "client:build": "npm run build --prefix client"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.0",
+    "pdfkit": "^0.19.1",
+    "qrcode": "^1.5.4",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "pdf-parse": "^2.4.5"
+  }
+}

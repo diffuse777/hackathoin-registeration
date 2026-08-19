@@ -1,0 +1,9 @@
+.git
+.cursor
+agent-transcripts
+client/node_modules
+node_modules
+server/logs
+server/tests
+client/dist
+*.log

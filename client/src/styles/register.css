@@ -1,0 +1,140 @@
+.register-page,
+.page-screen {
+  background: rgb(14 11 10 / 0.82);
+  border: 1px solid rgb(44 39 40 / 0.9);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.4);
+  max-width: 56rem;
+  padding: 1.6rem 1.25rem 2.1rem;
+}
+
+.page-screen--narrow {
+  max-width: 40rem;
+}
+
+.register-layout {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.register-form,
+.summary-list {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.member-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 1rem 1rem 1.15rem;
+}
+
+.member-card__header {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.member-card__header h2 {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.member-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.register-form__bar {
+  align-items: stretch;
+  display: grid;
+  gap: 1rem;
+}
+
+.fee-preview {
+  margin: 0;
+}
+
+.fee-preview__amount {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.fee-preview__note {
+  color: var(--muted);
+  display: block;
+  font-size: 0.86rem;
+  margin-top: 0.2rem;
+}
+
+.qr-wrap {
+  background: var(--qr-mat);
+  margin: 1.25rem auto;
+  max-width: 17.5rem;
+  padding: 0.85rem;
+  width: min(100%, 17.5rem);
+}
+
+.qr-wrap img {
+  aspect-ratio: 1 / 1;
+  display: block;
+  height: auto;
+  object-fit: contain;
+  width: 100%;
+}
+
+.payment-amount {
+  font-family: var(--font-body);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0.35rem 0 0.8rem;
+  text-align: center;
+}
+
+.summary-grid {
+  display: grid;
+  gap: 0.35rem 1.25rem;
+}
+
+.summary-grid dt {
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.summary-grid dd {
+  font-family: var(--font-body);
+  font-weight: 600;
+  margin: 0 0 0.7rem;
+}
+
+@media (min-width: 768px) {
+  .member-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .register-form__bar {
+    align-items: end;
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .register-layout {
+    grid-template-columns: minmax(0, 1.4fr) minmax(14rem, 0.7fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .register-form__bar .btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse Hackathon · Payment</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <header class="topbar">
+      <div class="topbar-left">
+        <a class="logo-btn" href="/home" aria-label="Cybernerds home">
+          <img class="logo logo-cybernerds" src="/images/cybernerds.png" alt="Cybernerds KARE Student Chapter" />
+        </a>
+        <img class="logo logo-owasp" src="/images/owasp.png" alt="OWASP KARE Student Chapter" />
+      </div>
+      <div class="topbar-right">
+        <img class="logo logo-kare" src="/images/kare.png" alt="Kalasalingam Academy of Research and Education" />
+        <a class="btn btn-primary header-register" href="/register">Register</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="view-head">
+        <h2>Pay the calculated amount</h2>
+        <p>The QR is generated from the backend fee. Do not edit the amount.</p>
+      </div>
+      <div class="pay-layout">
+        <div class="qr-card">
+          <img id="qr-image" alt="Payment QR code" />
+          <p id="qr-amount" class="qr-amount">₹0</p>
+          <p id="pay-status" class="status-chip">PENDING</p>
+        </div>
+        <div class="pay-copy">
+          <p id="pay-team"></p>
+          <p class="muted">Status updates after the payment gateway webhook is verified on the server.</p>
+          <div id="mock-actions" class="mock-actions" hidden>
+            <p class="muted">Test gateway is on. This still goes through signature verification.</p>
+            <button id="mock-pay" class="btn btn-primary" type="button">Complete test payment</button>
+            <button id="mock-fail" class="btn btn-ghost" type="button">Simulate failed payment</button>
+          </div>
+          <p id="pay-error" class="error" hidden></p>
+        </div>
+      </div>
+    </main>
+    <script src="/js/pay.js"></script>
+  </body>
+</html>

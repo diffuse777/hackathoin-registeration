@@ -1,0 +1,230 @@
+.btn {
+  align-items: center;
+  background: var(--crimson);
+  border: 1px solid var(--crimson);
+  border-radius: var(--radius);
+  color: var(--on-accent);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--font-body);
+  font-weight: 600;
+  justify-content: center;
+  letter-spacing: 0.08em;
+  min-height: 2.85rem;
+  padding: 0.55rem 1.15rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.btn:hover {
+  background: var(--crimson-deep);
+  border-color: var(--crimson-deep);
+  color: var(--on-accent);
+}
+
+.btn--secondary {
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.btn--secondary:hover {
+  background: var(--surface-2);
+  border-color: var(--crimson);
+  color: var(--ink);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.btn:disabled:hover {
+  background: var(--crimson);
+  border-color: var(--crimson);
+  color: var(--on-accent);
+}
+
+.btn--secondary:disabled:hover {
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.btn--compact {
+  min-height: 2.15rem;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.72rem;
+}
+
+.table-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.field > span:first-child {
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  min-height: 2.85rem;
+  padding: 0.45rem 0.75rem;
+  width: 100%;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #6f6862;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--crimson);
+  outline: none;
+}
+
+.field input[aria-invalid='true'],
+.field select[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.field__error,
+.form-error {
+  color: var(--danger);
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.form-error {
+  margin: 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.15rem;
+}
+
+.status-line {
+  color: var(--muted);
+  margin: 0.35rem 0 0;
+}
+
+.status-line--error,
+.alert--error {
+  color: var(--danger);
+}
+
+.alert {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--crimson);
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+}
+
+.alert--error {
+  border-left-color: var(--danger);
+}
+
+.alert p {
+  margin: 0;
+}
+
+.loading-state {
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.empty-state {
+  border: 1px dashed var(--line-strong);
+  padding: 2rem 1.25rem;
+  text-align: center;
+}
+
+.modal-backdrop {
+  align-items: center;
+  background: rgb(7 7 8 / 0.78);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  padding: 1rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 50;
+}
+
+.modal {
+  background: var(--near-black);
+  border: 1px solid var(--line-strong);
+  max-width: 28rem;
+  padding: 1.75rem 1.5rem;
+  width: min(100%, 28rem);
+}
+
+.modal h2 {
+  color: var(--crimson-soft);
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.modal__challenge {
+  color: var(--ink);
+  letter-spacing: 0.14em;
+  margin: 0.35rem 0 1.15rem;
+}
+
+.badge {
+  border: 1px solid var(--line-strong);
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.45rem;
+  text-transform: uppercase;
+}
+
+.badge--paid {
+  border-color: var(--crimson);
+  color: var(--ink);
+}
+
+.badge--pending {
+  color: var(--muted);
+}
+
+.badge--failed {
+  border-color: var(--danger);
+  color: var(--danger);
+}

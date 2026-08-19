@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse Hackathon · Register</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <header class="topbar">
+      <div class="topbar-left">
+        <a class="logo-btn" href="/home" aria-label="Cybernerds home">
+          <img class="logo logo-cybernerds" src="/images/cybernerds.png" alt="Cybernerds KARE Student Chapter" />
+        </a>
+        <img class="logo logo-owasp" src="/images/owasp.png" alt="OWASP KARE Student Chapter" />
+      </div>
+      <div class="topbar-right">
+        <img class="logo logo-kare" src="/images/kare.png" alt="Kalasalingam Academy of Research and Education" />
+        <a class="btn btn-primary header-register" href="/register">Register</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="view-head">
+        <h2>Team sheet</h2>
+        <p>Hostel students must include hostel name and room number. Day scholars skip those fields.</p>
+      </div>
+      <form id="register-form">
+        <label class="field">
+          <span>Team name</span>
+          <input name="teamName" maxlength="80" required placeholder="e.g. Night Shift" />
+        </label>
+        <div id="members"></div>
+        <div class="form-bar">
+          <button id="add-member" class="btn btn-ghost" type="button">Add member</button>
+          <p id="fee-preview" class="fee-preview">₹350</p>
+          <button class="btn btn-primary" type="submit">Create registration</button>
+        </div>
+        <p id="register-error" class="error" hidden></p>
+      </form>
+    </main>
+    <script src="/js/register.js"></script>
+  </body>
+</html>
