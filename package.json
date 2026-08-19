@@ -32,6 +32,7 @@
     "mongoose": "^8.18.0",
     "pdfkit": "^0.19.1",
     "qrcode": "^1.5.4",
+    "serverless-http": "^3.2.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {

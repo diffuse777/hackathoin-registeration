@@ -45,9 +45,10 @@ function isAllowedCorsOrigin(origin, allowed) {
   return Boolean(process.env.VERCEL) && /^https:\/\/[\w.-]+\.vercel\.app$/.test(origin);
 }
 
-function createApp(config) {
+function createApp(config, options = {}) {
   const app = express();
   const corsOrigins = allowedCorsOrigins(config);
+  const apiOnly = Boolean(options.apiOnly || process.env.VERCEL);
 
   app.set('trust proxy', 1);
   app.disable('x-powered-by');
@@ -95,20 +96,21 @@ function createApp(config) {
   app.use('/api', apiRoutes);
   app.use('/api', notFound);
 
-  function sendPage(fileName) {
-    return (req, res) => {
-      res.sendFile(path.join(legacyClientDir, fileName));
-    };
+  if (!apiOnly) {
+    function sendPage(fileName) {
+      return (req, res) => {
+        res.sendFile(path.join(legacyClientDir, fileName));
+      };
+    }
+
+    app.get('/', sendPage('home.html'));
+    app.get('/home', sendPage('home.html'));
+    app.get('/register', sendPage('register.html'));
+    app.get('/pay', sendPage('pay.html'));
+    app.get('/done', sendPage('done.html'));
+    app.get('/admin', sendPage('admin.html'));
+    app.use(express.static(legacyClientDir));
   }
-
-  app.get('/', sendPage('home.html'));
-  app.get('/home', sendPage('home.html'));
-  app.get('/register', sendPage('register.html'));
-  app.get('/pay', sendPage('pay.html'));
-  app.get('/done', sendPage('done.html'));
-  app.get('/admin', sendPage('admin.html'));
-
-  app.use(express.static(legacyClientDir));
 
   app.use(notFound);
   app.use(errorHandler(config));

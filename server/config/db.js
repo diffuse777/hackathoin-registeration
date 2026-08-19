@@ -37,7 +37,7 @@ async function connectDB(mongoUri) {
   }
 
   await mongoose.connect(mongoUri, {
-    serverSelectionTimeoutMS: 15000,
+    serverSelectionTimeoutMS: process.env.VERCEL ? 8000 : 15000,
     maxPoolSize: process.env.VERCEL ? 5 : 10,
   });
 
