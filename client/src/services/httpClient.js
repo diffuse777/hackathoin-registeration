@@ -5,7 +5,7 @@ import { getAdminToken } from '../utils/authStorage';
 
 export const httpClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 20000,
+  timeout: 25000,
   withCredentials: true,
   headers: {
     Accept: 'application/json',

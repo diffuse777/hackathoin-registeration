@@ -1,5 +1,10 @@
+const dns = require('dns');
 const mongoose = require('mongoose');
 const logger = require('./logger');
+
+if (typeof dns.setDefaultResultOrder === 'function') {
+  dns.setDefaultResultOrder('ipv4first');
+}
 
 let listenersBound = false;
 
@@ -25,6 +30,7 @@ function bindConnectionListeners() {
 
 async function connectDB(mongoUri) {
   mongoose.set('strictQuery', true);
+  mongoose.set('bufferCommands', !process.env.VERCEL);
   bindConnectionListeners();
 
   if (mongoose.connection.readyState === 1) {
@@ -36,14 +42,25 @@ async function connectDB(mongoUri) {
     return mongoose.connection;
   }
 
-  await mongoose.connect(mongoUri, {
-    serverSelectionTimeoutMS: process.env.VERCEL ? 5000 : 15000,
-    connectTimeoutMS: process.env.VERCEL ? 5000 : 15000,
-    socketTimeoutMS: 20000,
+  const connectPromise = mongoose.connect(mongoUri, {
+    serverSelectionTimeoutMS: process.env.VERCEL ? 4000 : 15000,
+    connectTimeoutMS: process.env.VERCEL ? 4000 : 15000,
+    socketTimeoutMS: 15000,
     maxPoolSize: process.env.VERCEL ? 1 : 10,
     minPoolSize: 0,
     family: 4,
   });
+
+  if (process.env.VERCEL) {
+    await Promise.race([
+      connectPromise,
+      new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('MongoDB connection timed out')), 6000);
+      }),
+    ]);
+  } else {
+    await connectPromise;
+  }
 
   return mongoose.connection;
 }
