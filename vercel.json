@@ -4,10 +4,12 @@
   "outputDirectory": "client/dist",
   "framework": null,
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/api", "destination": "/api" },
+    { "source": "/api/:path*", "destination": "/api" },
+    { "source": "/:path*", "destination": "/index.html" }
   ],
   "functions": {
-    "api/[[...path]].js": {
+    "api/index.js": {
       "includeFiles": "server/**",
       "maxDuration": 10
     }

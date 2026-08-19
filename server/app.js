@@ -92,11 +92,17 @@ function createApp(config, options = {}) {
   }));
   app.use(express.urlencoded({ extended: true, limit: '10kb' }));
   app.use(requestLogger);
-  app.use('/api', createApiRateLimiter());
+
+  const apiLimiter = createApiRateLimiter();
+  app.use('/api', apiLimiter);
   app.use('/api', apiRoutes);
   app.use('/api', notFound);
 
-  if (!apiOnly) {
+  if (apiOnly) {
+    // Vercel may strip /api when rewriting into the function, e.g. /admin/auth/login.
+    app.use(apiLimiter);
+    app.use(apiRoutes);
+  } else {
     function sendPage(fileName) {
       return (req, res) => {
         res.sendFile(path.join(legacyClientDir, fileName));
