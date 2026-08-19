@@ -7,6 +7,16 @@ function readEnv(name) {
   return typeof value === 'string' ? value.trim() : '';
 }
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function normalizeAdminEmail(value) {
+  const email = String(value || '').trim().toLowerCase();
+  if (!email || email === 'admin' || !EMAIL_PATTERN.test(email)) {
+    return 'admin@example.com';
+  }
+  return email;
+}
+
 function derivedSecret(purpose, parts) {
   return crypto.createHash('sha256').update([purpose, ...parts].join('|')).digest('hex');
 }
@@ -58,7 +68,7 @@ function loadEnv() {
   assertEnv();
 
   const nodeEnv = process.env.NODE_ENV || 'development';
-  const adminEmail = readEnv('ADMIN_EMAIL');
+  const adminEmail = normalizeAdminEmail(readEnv('ADMIN_EMAIL'));
   const adminPassword = readEnv('ADMIN_PASSWORD');
   const mongoUri = readEnv('MONGODB_URI');
   const seed = [mongoUri, adminEmail, adminPassword];

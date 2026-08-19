@@ -45,6 +45,31 @@ function isAllowedCorsOrigin(origin, allowed) {
   return Boolean(process.env.VERCEL) && /^https:\/\/[\w.-]+\.vercel\.app$/.test(origin);
 }
 
+function hydrateJsonBody(req, res, next) {
+  if (req._body) {
+    return next();
+  }
+
+  if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) {
+    if (Object.keys(req.body).length > 0) {
+      req._body = true;
+    }
+    return next();
+  }
+
+  if (typeof req.body === 'string' || Buffer.isBuffer(req.body)) {
+    const raw = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : req.body;
+    try {
+      req.body = raw ? JSON.parse(raw) : {};
+    } catch {
+      req.body = {};
+    }
+    req._body = true;
+  }
+
+  return next();
+}
+
 function createApp(config, options = {}) {
   const app = express();
   const corsOrigins = allowedCorsOrigins(config);
@@ -84,6 +109,7 @@ function createApp(config, options = {}) {
       allowedHeaders: ['Content-Type', 'Authorization'],
     })
   );
+  app.use(hydrateJsonBody);
   app.use(express.json({
     limit: '32kb',
     verify: (req, res, buf) => {

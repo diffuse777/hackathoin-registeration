@@ -10,11 +10,14 @@ function validateAdminLogin(body) {
   }
 
   let email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
+  if (!email && typeof body.username === 'string') {
+    email = body.username.trim().toLowerCase();
+  }
   const password = typeof body.password === 'string' ? body.password : '';
   const envEmail = String(loadEnv().admin.email).trim().toLowerCase();
 
   if (!email || email === 'admin' || email === 'admin@example.com') {
-    email = envEmail;
+    email = envEmail || 'admin@example.com';
   }
 
   if (!email || !EMAIL_PATTERN.test(email) || !password) {

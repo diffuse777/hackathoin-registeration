@@ -19,6 +19,10 @@ httpClient.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
+  if (config.data && typeof config.data === 'object' && !(config.data instanceof FormData)) {
+    config.headers['Content-Type'] = config.headers['Content-Type'] || 'application/json';
+  }
+
   return config;
 });
 

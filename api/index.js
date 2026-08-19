@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const serverless = require('serverless-http');
 const { loadEnv } = require('../server/config/env');
 const { connectDB } = require('../server/config/db');
 const { createApp } = require('../server/app');
@@ -7,7 +8,7 @@ const { ensureInitialAdmin } = require('../server/services/adminAuthService');
 
 const globalForApi = globalThis;
 if (!globalForApi.__hackathonApi) {
-  globalForApi.__hackathonApi = { appPromise: null };
+  globalForApi.__hackathonApi = { handlerPromise: null };
 }
 
 function restoreApiUrl(req) {
@@ -29,56 +30,54 @@ function restoreApiUrl(req) {
   req.url = `${pathname === '/' ? '/api' : `/api${pathname.startsWith('/') ? pathname : `/${pathname}`}`}${search}`;
 }
 
-function runExpress(app, req, res) {
-  return new Promise((resolve, reject) => {
-    const done = () => {
-      res.off('finish', done);
-      res.off('close', done);
-      resolve();
-    };
+function parseVercelBody(req) {
+  if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) {
+    req._body = true;
+    return;
+  }
 
-    res.on('finish', done);
-    res.on('close', done);
-
+  if (typeof req.body === 'string' || Buffer.isBuffer(req.body)) {
+    const raw = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : req.body;
     try {
-      app(req, res, (error) => {
-        if (error) {
-          reject(error);
-        }
-      });
-    } catch (error) {
-      reject(error);
+      req.body = raw ? JSON.parse(raw) : {};
+    } catch {
+      req.body = {};
     }
-  });
+    req._body = true;
+  }
 }
 
-async function getApp() {
-  if (!globalForApi.__hackathonApi.appPromise) {
-    globalForApi.__hackathonApi.appPromise = (async () => {
+async function getHandler() {
+  if (!globalForApi.__hackathonApi.handlerPromise) {
+    globalForApi.__hackathonApi.handlerPromise = (async () => {
       const config = loadEnv();
       try {
         await connectDB(config.mongoUri);
-      } catch (error) {
+      } catch {
         throw new Error(
           'Cannot reach MongoDB from Vercel. In Atlas go to Network Access and allow 0.0.0.0/0, then check MONGODB_URI.'
         );
       }
       await ensureInitialAdmin(config.admin);
-      return createApp(config, { apiOnly: true });
+      const app = createApp(config, { apiOnly: true });
+      return serverless(app, {
+        binary: ['application/pdf', 'application/octet-stream'],
+      });
     })().catch((error) => {
-      globalForApi.__hackathonApi.appPromise = null;
+      globalForApi.__hackathonApi.handlerPromise = null;
       throw error;
     });
   }
 
-  return globalForApi.__hackathonApi.appPromise;
+  return globalForApi.__hackathonApi.handlerPromise;
 }
 
 module.exports = async (req, res) => {
   try {
     restoreApiUrl(req);
-    const app = await getApp();
-    await runExpress(app, req, res);
+    parseVercelBody(req);
+    const handler = await getHandler();
+    return handler(req, res);
   } catch (error) {
     if (!res.headersSent) {
       res.statusCode = 500;
